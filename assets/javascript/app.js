@@ -21,6 +21,7 @@ var triviaGame = {
     right: 0,
     wrong: 0,
     gameCount: 0, //keeps track of question index
+    loading: true, //flag for question or answer screen, T= question, F= answer
 
     q1: {
         question: "Queston 1:",
@@ -39,7 +40,7 @@ var triviaGame = {
     },
 
     gameReset: function(){
-        //Resets the game
+        //Resets the game values
         triviaGame.right = 0;
         triviaGame.wrong = 0;
         triviaGame.gameCount = 0;
@@ -50,26 +51,38 @@ var triviaGame = {
     nextQuestion: function(){
         //Object Function: display question, time-limit and answer choices
 
-        //Checks if there are no more questions
-        if (triviaGame.gameCount >= questionList.length){
-            gameStop();
+        if (timer <= 0 && triviaGame.loading){
+            $("#timeLimit").text(timer);
+            triviaGame.loading = !triviaGame.loading;
+            timer = 2;
+            triviaGame.timeOut();
         }
-        else{
-            //DEBUG CODE
-            console.log(questionList[triviaGame.gameCount].question);
-            //alert("hello");
-
-            //TODO: HTML Hookup to display question and answer choices
-
-            //TODO: Timer interrupt on-click event with answer choices below
+        else if (timer <= 0 && !triviaGame.loading){
+            $("#timeLimit").text(timer);
+            triviaGame.loading = !triviaGame.loading;
+            timer = 5;
+        }
+        else if (triviaGame.loading){
+            if (triviaGame.gameCount >= questionList.length){
+                gameStop();
+            }
+            else{
+                //TODO: function to build and display question and answer
+                $("#question").text(questionList[triviaGame.gameCount].question);
+                //DEBUG CODE
+                console.log(questionList[triviaGame.gameCount].question);
+                console.log(timer);
+                //Display time limit
+                $("#timeLimit").text(timer);
+                timer--;
+            }
             
-            //TODO: Timer time-out event here
-            //Set so that timer takes up ~80% of time interval
-            setTimeout(triviaGame.timeOut, 1000 * 3);
-
-            clearInterval(countdownID);
-            timer = 3;
-            countdownID = setInterval(countDown, 1000);
+        }
+        else if(!triviaGame.loading){
+            //DEBUG CODE
+            console.log(timer);
+            $("#timeLimit").text(timer);
+            timer--;
         }
     },
 
@@ -78,17 +91,12 @@ var triviaGame = {
         //alert("Times up");
         console.log(questionList[triviaGame.gameCount].answer);
         triviaGame.gameCount++; //increment counter
-
-        clearInterval(countdownID);
-        timer = 2;
-        countdownID = setInterval(countDown, 1000);
     },
 };
 
 //Global variables
 var gameInterval; //Variable to hold setInterval for each question
-var countdownID;
-//var timeOutID; //May need this to cancel timeOut if player made a choice
+
 var questionList = [triviaGame.q1, triviaGame.q2, triviaGame.q3];
 var timer;
 
@@ -96,11 +104,9 @@ var timer;
 //Note: experimenting with ES6 syntax
 const gameStart = () => {
     //Funtion: Start interval timer
+    timer = 5;
     clearInterval(gameInterval);
-    clearInterval(countdownID);
-    gameInterval = setInterval(triviaGame.nextQuestion, 1000 * 5);
-    timer = 4;
-    countdownID = setInterval(countDown, 1000);
+    gameInterval = setInterval(triviaGame.nextQuestion, 1000);
 
     //DEBUG CODE
     console.log("game start");
@@ -109,7 +115,6 @@ const gameStart = () => {
 const gameStop = () => {
     //Fuction: Stops interval timer and calls up final screen
     clearInterval(gameInterval);
-    clearInterval(countdownID);
 
     //TODO: call up final result screen and play again option
 
