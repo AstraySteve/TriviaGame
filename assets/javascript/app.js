@@ -49,38 +49,34 @@ var triviaGame = {
     },
 
     nextQuestion: function(){
-        //Object Function: display question, time-limit and answer choices
+        //Object Function: determine and display current game round
 
         if (timer <= 0 && triviaGame.loading){
+            //Go to time-out
             $("#timeLimit").text(timer);
             triviaGame.loading = !triviaGame.loading;
             timer = 2;
             triviaGame.timeOut();
         }
         else if (timer <= 0 && !triviaGame.loading){
+            //prepare for next round
             $("#timeLimit").text(timer);
             triviaGame.loading = !triviaGame.loading;
-            timer = 5;
-        }
-        else if (triviaGame.loading){
             if (triviaGame.gameCount >= questionList.length){
+                //Checks if there are no more questions
                 gameStop();
             }
             else{
-                //TODO: function to build and display question and answer
-                $("#question").text(questionList[triviaGame.gameCount].question);
-                //DEBUG CODE
-                console.log(questionList[triviaGame.gameCount].question);
-                console.log(timer);
-                //Display time limit
-                $("#timeLimit").text(timer);
-                timer--;
-            }
-            
+                //Sets up next trivia question
+                timer = 5;
+                triviaGame.triviaSetup();
+            }        
         }
-        else if(!triviaGame.loading){
+        else{
             //DEBUG CODE
             console.log(timer);
+
+            //Display time limit
             $("#timeLimit").text(timer);
             timer--;
         }
@@ -92,6 +88,17 @@ var triviaGame = {
         console.log(questionList[triviaGame.gameCount].answer);
         triviaGame.gameCount++; //increment counter
     },
+
+    triviaSetup: function(){
+        //Object Function: Setup and displays question and answer choices
+        $("#question").text(questionList[triviaGame.gameCount].question);
+        $("#choices").empty();
+        for (i=0; i<questionList[triviaGame.gameCount].choices.length; i++){
+            $('#choices').append("<li><button class='btn btn-primary answer' value=" + i + ">" + i + "</button></li>")
+        }
+        //DEBUG CODE
+        console.log(questionList[triviaGame.gameCount].question);
+    }
 };
 
 //Global variables
@@ -104,12 +111,14 @@ var timer;
 //Note: experimenting with ES6 syntax
 const gameStart = () => {
     //Funtion: Start interval timer
-    timer = 5;
-    clearInterval(gameInterval);
-    gameInterval = setInterval(triviaGame.nextQuestion, 1000);
 
     //DEBUG CODE
     console.log("game start");
+
+    timer = 5;
+    clearInterval(gameInterval);
+    gameInterval = setInterval(triviaGame.nextQuestion, 1000);
+    triviaGame.triviaSetup();
 }
 
 const gameStop = () => {
@@ -122,21 +131,25 @@ const gameStop = () => {
     console.log("game stopped");
 }
 
-const countDown = () =>{
-    //Function: Decrement and display time remaining
-    timer--;
-
-    //TODO: HTML hookup to display countdown
-
-    //DEBUG CODE
-    console.log(timer);
-}
-
 //Main
 $(document).ready(function() {
 
     $("#start").on("click", function(){
         //Start game after start button clicked
         triviaGame.gameReset();
+
+        //TODO: stuff for init game setup
     });
+
+    $("#choices").on("click", ".answer", function(){
+        //Resets the timer to display player choice result
+        timer = 3;
+        triviaGame.loading = false;
+
+        //DEBUG CODE
+        console.log("hello Answer");
+
+        //TODO: compare choice to answer
+        triviaGame.gameCount++; //increment counter
+    })
 });
