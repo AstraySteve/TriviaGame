@@ -20,29 +20,31 @@
 var triviaGame = {
     right: 0,
     wrong: 0,
+    unanswered: 0,
     gameCount: 0, //keeps track of question index
     loading: true, //flag for question or answer screen, T= question, F= answer
 
     q1: {
         question: "Queston 1:",
-        choices: [1,2,3,4],
-        answer: "Answer 1",
+        choices: [5,6,7,8],
+        answer: 0,
     },
     q2: {
         question: "Queston 2:",
-        choices: [1,2,3,4],
-        answer: "Answer 2",
+        choices: [5,6],
+        answer: 1,
     },
     q3: {
         question: "Queston 3:",
-        choices: [1,2,3,4],
-        answer: "Answer 3",
+        choices: [5,6,7,8],
+        answer: 2,
     },
 
     gameReset: function(){
         //Resets the game values
         triviaGame.right = 0;
         triviaGame.wrong = 0;
+        triviaGame.unanswered = 0;
         triviaGame.gameCount = 0;
         
         gameStart();
@@ -84,25 +86,44 @@ var triviaGame = {
 
     timeOut: function(){
         //Object Function: User did not choose an answer within the time limit
-        //alert("Times up");
+        //DEBUG CODE
         console.log(questionList[triviaGame.gameCount].answer);
+
+        triviaGame.unanswered++;
         triviaGame.gameCount++; //increment counter
     },
 
     triviaSetup: function(){
         //Object Function: Setup and displays question and answer choices
         $("#question").text(questionList[triviaGame.gameCount].question);
+
         $("#choices").empty();
         for (i=0; i<questionList[triviaGame.gameCount].choices.length; i++){
-            $('#choices').append("<li><button class='btn btn-primary answer' value=" + i + ">" + i + "</button></li>")
+            var label = questionList[triviaGame.gameCount].choices[i];
+            $('#choices').append("<button class='btn btn-primary answer' value=" + i + ">" + label + "</button>")
         }
+
         //DEBUG CODE
         console.log(questionList[triviaGame.gameCount].question);
-    }
+    },
+
+    compareAnswers: function(userAnswer){
+        //Object Function: Compare userAnswer (int) with true answer (int)
+        if (userAnswer == questionList[triviaGame.gameCount].answer){
+            //DEBUG CODE
+            console.log("correct");
+            triviaGame.right++;
+        }
+        else{
+            //DEBUG CODE
+            console.log("incorrect")
+            triviaGame.wrong++;
+        }
+    },
 };
 
 //Global variables
-var gameInterval; //Variable to hold setInterval for each question
+var gameInterval; //Variable to hold setInterval that runs the game
 
 var questionList = [triviaGame.q1, triviaGame.q2, triviaGame.q3];
 var timer;
@@ -126,7 +147,9 @@ const gameStop = () => {
     clearInterval(gameInterval);
 
     //TODO: call up final result screen and play again option
-
+    $("#correct").text("correct: " + triviaGame.right);
+    $("#incorrect").text("incorrect: " + triviaGame.wrong);
+    $("#unanswered").text("unanswered: " + triviaGame.unanswered);
     //DEBUG CODE
     console.log("game stopped");
 }
@@ -147,9 +170,9 @@ $(document).ready(function() {
         triviaGame.loading = false;
 
         //DEBUG CODE
-        console.log("hello Answer");
+        console.log("clicked " + this.value);
 
-        //TODO: compare choice to answer
+        triviaGame.compareAnswers(this.value);
         triviaGame.gameCount++; //increment counter
     })
 });
