@@ -9,9 +9,28 @@ html, body{
     background-color: lightblue;
 }
 
-.container{
-    margin: 0;
-    padding: 0;
+#topBar{
+    position: relative;
+    width: 50%;
+    left: 50%;
+    transform: translate(-50%);
+    margin: 10px 0;
+}
+
+#timeLimit{
+    position: relative;
+    width: 50%;
+    left: 50%;
+    transform: translate(-50%);
+    text-align: center;
+}
+
+#questionBar{
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin: 10px 0;
 }
 
 #gameBoard{
@@ -25,11 +44,6 @@ html, body{
     text-align: center;
 }
 
-
-#start{
-    display: flex;
-    justify-content: center;
-}
 /*
 *{
     border: 1px solid red !important;
@@ -38,5 +52,8 @@ html, body{
 @media only screen and (max-width: 600px){
     #gameBoard{
         margin:10vh 0;
+    }
+    #topBar{
+        width:83.33%;
     }
 }
