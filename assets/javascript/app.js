@@ -162,6 +162,7 @@ $(document).ready(function() {
         triviaGame.gameReset();
 
         //TODO: stuff for init game setup
+        $("#start").css("display", "none");
     });
 
     $("#choices").on("click", ".answer", function(){

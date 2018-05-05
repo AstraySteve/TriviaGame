@@ -22,12 +22,25 @@
     </head>
 
     <body>
-        <h1>TEMP TITLE</h1>
+        <div id="gameBoard">
+            <header id="mainHeader">
+                <h1>Trivia Game!</h1>
+            </header>
+
+            <section class="container">
+                <div class="row">
+                    <div class="col-1 col-lg-3"></div><!--MarginDiv-->
+                    <div class="col-10 col-lg-6">
+                        <button id="start" class="btn btn-primary btn-block">Start</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+
         <p>Time Left: <span id="timeLimit"></span> Seconds</p>
         <p>Trivia Question: <span id="question"></span></p>
         <p>Trivia Answers</p>
         <div id="choices"></div>
-        <button id="start" class="btn btn-primary">Start</button>
         <p id="correct"></p>
         <p id="incorrect"></p>
         <p id="unanswered"></p>
