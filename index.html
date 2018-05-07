@@ -22,33 +22,37 @@
     </head>
 
     <body>
-        <div id="gameBoard">
-            <header id="mainHeader">
+        <div class="container-fluid">
+            <header id="main-header">
                 <h1>Trivia Game!</h1>
             </header>
 
-            <section class="container">
-                <div class="row" id="topBar">
-                    <button id="start" class="btn btn-primary btn-block">Start</button>
-                    <h3 id="timeLimit"></h3>
+            <div class="row justify-content-center" id="top-block">
+                <div class="col-10 col-md-6 col-lg-4">
+                    <button class="btn btn-primary btn-block" id="start"><strong>START</strong></button>
+                    <button class="btn btn-success btn-block" id="playAgain"><strong>PLAY AGAIN</strong></button>
+                    <span id="clock">Time Remaining: <span id="timeLimit"></span> Seconds</span>
                 </div>
-                <div class="row">
-                    <div class="col-12" id="questionBar">
-                        <p id="question"></p>
-                    </div>
-                </div>
-                <div class="row">
-                    
-                </div>
-            </section>
-        </div>
+            </div>
 
-        <p>Trivia Question: <span id="question"></span></p>
-        <p>Trivia Answers</p>
-        <div id="choices"></div>
-        <p id="correct"></p>
-        <p id="incorrect"></p>
-        <p id="unanswered"></p>
+            <div class="row justify-content-center" id="question-block">
+                <div class="col-1 col-lg-2"></div>
+                <div class="col-auto">
+                    <p id="gamePhase"></p>
+                    <p id="question"></p>
+                    <p class="results" id="correct"></p>
+                    <p class="results" id="incorrect"></p>
+                    <p class="results" id="unanswered"></p>
+                </div>
+                <div class="col-1 col-lg-2"></div>
+            </div>
+
+            <div class="row justify-content-center" id="bottom-block">
+                <div class="col-8" id="choices">
+
+                </div>
+            </div>
+        </div>
 
         <!--Javascript-->
         <script type="text/javascript" src="assets/javascript/app.js"></script>

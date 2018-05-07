@@ -25,8 +25,8 @@ var triviaGame = {
     loading: true, //flag for question or answer screen, T= question, F= answer
 
     q1: {
-        question: "Queston 1:",
-        choices: [5,6,7,8],
+        question: "Batman had many sidekicks over the years that took on the identity of Robin. Who was the first Robin?",
+        choices: ["Richard Grayson","Jason Todd","Tim Drake","Damian Wayne"],
         answer: 0,
     },
     q2: {
@@ -47,6 +47,9 @@ var triviaGame = {
         triviaGame.unanswered = 0;
         triviaGame.gameCount = 0;
         
+        $("#correct").empty();
+        $("#incorrect").empty();
+        $("#unanswered").empty();
         gameStart();
     },
 
@@ -89,18 +92,20 @@ var triviaGame = {
         //DEBUG CODE
         console.log(questionList[triviaGame.gameCount].answer);
 
+        triviaGame.showAnswer("TIMES UP!")
         triviaGame.unanswered++;
         triviaGame.gameCount++; //increment counter
     },
 
     triviaSetup: function(){
         //Object Function: Setup and displays question and answer choices
+        $("#gamePhase").text("Question: ");
         $("#question").text(questionList[triviaGame.gameCount].question);
 
         $("#choices").empty();
         for (i=0; i<questionList[triviaGame.gameCount].choices.length; i++){
             var label = questionList[triviaGame.gameCount].choices[i];
-            $('#choices').append("<button class='btn btn-primary answer' value=" + i + ">" + label + "</button>")
+            $('#choices').append("<button class='btn btn-primary btn-block answer' value=" + i + ">" + label + "</button>")
         }
 
         //DEBUG CODE
@@ -113,13 +118,21 @@ var triviaGame = {
             //DEBUG CODE
             console.log("correct");
             triviaGame.right++;
+            triviaGame.showAnswer("CORRECT!");
+
         }
         else{
             //DEBUG CODE
             console.log("incorrect")
             triviaGame.wrong++;
+            triviaGame.showAnswer("WRONG!")
         }
     },
+    showAnswer(result){
+        $("#gamePhase").text(result);
+        $("#question").text("The answer was: " + questionList[triviaGame.gameCount].choices[questionList[triviaGame.gameCount].answer]);
+        $("#choices").empty();
+    }
 };
 
 //Global variables
@@ -147,9 +160,14 @@ const gameStop = () => {
     clearInterval(gameInterval);
 
     //TODO: call up final result screen and play again option
+    $("#clock").css("display", "none");
+    $("#gamePhase").text("RESULTS");
+    $("#question").empty();
     $("#correct").text("correct: " + triviaGame.right);
     $("#incorrect").text("incorrect: " + triviaGame.wrong);
     $("#unanswered").text("unanswered: " + triviaGame.unanswered);
+    $("#playAgain").css("display","block");
+
     //DEBUG CODE
     console.log("game stopped");
 }
@@ -163,6 +181,7 @@ $(document).ready(function() {
 
         //TODO: stuff for init game setup
         $("#start").css("display", "none");
+        $("#clock").css("display", "block");
     });
 
     $("#choices").on("click", ".answer", function(){
@@ -175,5 +194,12 @@ $(document).ready(function() {
 
         triviaGame.compareAnswers(this.value);
         triviaGame.gameCount++; //increment counter
+    })
+
+    $("#playAgain").on("click", function(){
+        //Resets game to play again
+        triviaGame.gameReset();
+        $("#playAgain").css("display","none");
+        $("#clock").css("display", "block");
     })
 });

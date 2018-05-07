@@ -5,55 +5,49 @@
 */
 
 /*Element CSS*/
-html, body{
-    background-color: lightblue;
+body{
+    background-color: indigo;
+    background-image: url("../images/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top;
+
+    color: #ffffff;
+    line-height: 1.6;
 }
 
-#topBar{
-    position: relative;
-    width: 50%;
-    left: 50%;
-    transform: translate(-50%);
-    margin: 10px 0;
+p{
+    margin-bottom: 0rem;
 }
 
-#timeLimit{
-    position: relative;
-    width: 50%;
-    left: 50%;
-    transform: translate(-50%);
+.results{
+    margin-bottom: 1rem;
+}
+
+#main-header{
+    text-align: center;
+    margin: 5vh;
+}
+
+#playAgain, #clock{
+    display: none;
     text-align: center;
 }
 
-#questionBar{
+#top-block{
+    margin: 4vh 0;
+    min-height: 50px;
+}
+
+#gamePhase{
+    text-align: center;
+}
+
+#question-block{
     background-color: black;
-    color: white;
-    text-align: center;
+    border-top: 2px solid white;
+    border-bottom: 2px solid white;
+    margin: 4vh 0;
+    min-height: 50px;
     padding: 10px;
-    margin: 10px 0;
-}
-
-#gameBoard{
-    border: 2px solid white;
-    padding: 0;
-    margin: 10vh;
-    /*min-height: 80vh;*/
-}
-
-#mainHeader{
-    text-align: center;
-}
-
-/*
-*{
-    border: 1px solid red !important;
-}*/
-
-@media only screen and (max-width: 600px){
-    #gameBoard{
-        margin:10vh 0;
-    }
-    #topBar{
-        width:83.33%;
-    }
 }
