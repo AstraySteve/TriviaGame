@@ -4,18 +4,6 @@
     UofT SCS Coding Bootcamp
 */
 
-/*
-    TEMP NOTE REMOVE WHEN DONE
-    HTML Hookup names
-    Start - button
-    playAgain - button
-    playerChoice - button, value: 0 - 4
-    question - display question
-    answer - display answer
-    correct - display # of correct
-    incorrect - display # of incorrect
-    time - display countdown timer
-*/
 //Object Game Core
 var triviaGame = {
     right: 0,
@@ -30,13 +18,33 @@ var triviaGame = {
         answer: 0,
     },
     q2: {
-        question: "Queston 2:",
-        choices: [5,6],
+        question: "In the original ReBoot TV series (1994 - 2001), what is the name of the super-virius that was created when the viruses Megabyte and Hexidecimal merged?",
+        choices: ["Daemon","Gigabyte", "Killabyte", "Glitch"],
         answer: 1,
     },
     q3: {
-        question: "Queston 3:",
-        choices: [5,6,7,8],
+        question: "True or False: Iron Man's armor in the Marvel Cinematic Universe is made out of Adamantium.",
+        choices: ["True","False"],
+        answer: 1,
+    },
+    q4: {
+        question: "What are the names of Thomas passenger coaches in Thomas the Tank Engine?",
+        choices: ["Rom & Ram","Alice & Allison","Rod & Todd","Annie & Clarabel"],
+        answer: 3,
+    },
+    q5: {
+        question: "Which of the following is not a name of a NASA Space Shuttle Orbiter",
+        choices: ["Discovery","Enterprise","Odyssey","Atlantis"],
+        answer: 2,
+    },
+    q6: {
+        question: "In the movie The Matrix (1999), which pill did Neo take?",
+        choices: ["Red Pill","Blue Pill"],
+        answer: 0,
+    },
+    q7: {
+        question: "What is the name of Monopoly's mascot Mr.Monopoly?",
+        choices: ["Arthur Monopoly III","Lorenzo Von Matterhorn", "Rich Uncle Pennybags", "Uncle Moneybags"],
         answer: 2,
     },
 
@@ -138,7 +146,7 @@ var triviaGame = {
 //Global variables
 var gameInterval; //Variable to hold setInterval that runs the game
 
-var questionList = [triviaGame.q1, triviaGame.q2, triviaGame.q3];
+var questionList = [triviaGame.q1, triviaGame.q2, triviaGame.q3, triviaGame.q4, triviaGame.q5, triviaGame.q6, triviaGame.q7];
 var timer;
 
 //Functions
