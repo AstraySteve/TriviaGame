@@ -1,5 +1,12 @@
 # TriviaGame
-Assignment 5 - Javascript and jQuery
+Javascript and jQuery
 
-The main focus of this assignment is to use a combination of JavaScript and jQuery to manipulate HTML. 
-The primary exercise is the use of timed and delays functions to create a trivia themed game.
+Using a combination of JavaScript and jQuery to manipulate HTML along with timed and delay functions to create a simple trivia themed game.
+
+#### Game
+https://astraysteve.github.io/TriviaGame/
+
+#### Instructions
+* Go to the above web link to visit the game page.
+* Press Start to play the game
+* There is a limited time to answer each question
